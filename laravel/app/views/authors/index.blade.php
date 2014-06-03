@@ -1,6 +1,3 @@
-@extends('layouts.default')
-
-@section('content')
 	<h1>Authors Home Page</h1>
 
 	@if(isset($name))
@@ -12,4 +9,3 @@
 	{{ $age }}<br/>
 	{{ $location }}<br/>
 	{{ $speciality }}
-@stop

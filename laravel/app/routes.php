@@ -16,4 +16,52 @@ Route::get('/', function()
 	return View::make('hello');
 });
 
+Route::get('select',function(){
+//  $users = DB::select('select * from authors where id=?',array('2'));
+    $users = DB::table('test')->get();
+//  $users = DB::table('test')->where('id','=','2')->get();
+//  $users = DB::table('test')->where('id','=','2')->orWhere('fname','Neeraj')->get();
+//  $users = DB::table('test')->where('id','=','2')->orWhere('fname','Neeraj')->orderBy('lname','desc')->get();
+//  $users = DB::table('test')->select('fname')->where('id','=','2')->orWhere('fname','Neeraj')->orderBy('lname','desc')->get();
+    
+    return View::make('authors.list')->with('users',$users);
+});
+
+Route::post('insert',function(){
+    $input = Input::all();
+//  DB::insert('insert into test(fname,lname) values(?,?)',array($input['fname'],$input['lname']));
+    
+    $rules = array(
+        'fname' => 'required',
+        'lname' => 'required'
+    );
+    
+    $messages = array(
+        'fname.required' => 'A First Name is required',
+        'lname.required' => 'A Last Name is required'
+    );
+    
+    $v = Validator::make($input,$rules,$messages);
+    
+    if($v->passes())
+    {
+        DB::table('test')->insert(array(
+        'fname'=>$input['fname'],
+        'lname'=>$input['lname']
+        ));
+        
+        return Redirect::to('select');
+    }
+    else{
+        return Redirect::to('form')->withInput()->withErrors($v)->with('message');
+    }
+    
+    
+});
+
+Route::get('form',function(){
+    return View::make('authors.form');
+});
+
 Route::controller('authors', 'AuthorsController'); 
+Route::resource('welcome','WelcomeController');

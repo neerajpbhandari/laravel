@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>{{ $title }}</title>
+	<title>Form</title>
 </head>
 <body>
-	{{ $content }}
+	@yield('content')
 </body>
 </html>
