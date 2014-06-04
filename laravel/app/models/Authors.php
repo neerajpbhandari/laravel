@@ -3,7 +3,7 @@
 class Authors extends Eloquent{
     protected $table = 'test';
     
-    //public $timestamp
+    public $timestamps = false;
     
     public static $rules = array(
         'fname' => 'required',
